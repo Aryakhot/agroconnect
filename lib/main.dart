@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'signup.dart';
+import 'signup.dart'; // Import the SignUp page here
+import 'profile.dart'; // Assuming your profile page code is in profile.dart
+
 void main() {
   runApp(const MyApp());
 }
@@ -34,7 +36,17 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _selectedIndex = index;
     });
+    // Navigation logic based on index
+    if (index == 3) {
+      // Navigate to ProfilePage when Profile icon is tapped
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const ProfilePage()),
+      );
+    }
+    // Add more conditions for other indices if navigation is needed
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +54,13 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('AgroConnect'),
         backgroundColor: const Color(0xFF07480E),
-        actions: [  // Correctly placed actions property
-        IconButton(
-          icon: const Icon(Icons.language, color: Colors.white),
-          onPressed: () {
-            // Action for language selection
-            // Add your language selection logic here
-          },
-        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.language, color: Colors.white),
+            onPressed: () {
+              // Action for language selection
+            },
+          ),
         ],
       ),
       body: Container(
@@ -78,7 +89,6 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(
                 child: Column(
                   children: [
-                    // Updated Weather Card with more icons and data
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
@@ -119,15 +129,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                       SizedBox(height: 5),
-                                      const Text(
+                                      SizedBox(height: 5),
+                                      Text(
                                         'Thunderstorm, 4mm Rainfall',
                                         style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.black,
                                         ),
                                       ),
-                                      const SizedBox(height: 10),
+                                      SizedBox(height: 10),
                                       Row(
                                         children: [
                                           Icon(
@@ -135,22 +145,22 @@ class _MyHomePageState extends State<MyHomePage> {
                                             size: 18,
                                             color: Colors.black54,
                                           ),
-                                          const SizedBox(width: 5),
-                                          const Text(
+                                          SizedBox(width: 5),
+                                          Text(
                                             '16 km/h',
                                             style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black54,
                                             ),
                                           ),
-                                          const SizedBox(width: 10),
+                                          SizedBox(width: 10),
                                           Icon(
                                             Icons.water_drop,
                                             size: 18,
                                             color: Colors.black54,
                                           ),
                                           SizedBox(width: 5),
-                                          const Text(
+                                          Text(
                                             'Humidity: 80%',
                                             style: TextStyle(
                                               fontSize: 16,
@@ -169,8 +179,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                         size: 50,
                                         color: Colors.grey,
                                       ),
-                                      const SizedBox(height: 5),
-                                      const Text(
+                                      SizedBox(height: 5),
+                                      Text(
                                         '24°C',
                                         style: TextStyle(
                                           fontSize: 30,
@@ -182,13 +192,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 20),
-                              const Divider(color: Colors.black26, thickness: 1),
+                              SizedBox(height: 20),
+                              Divider(color: Colors.black26, thickness: 1),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
-                                    children: const [
+                                    children: [
                                       Icon(
                                         Icons.sunny,
                                         color: Colors.black54,
@@ -206,7 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ],
                                   ),
                                   Column(
-                                    children: const [
+                                    children: [
                                       Icon(
                                         Icons.nights_stay,
                                         color: Colors.black54,
@@ -224,7 +234,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ],
                                   ),
                                   Column(
-                                    children: const [
+                                    children: [
                                       Icon(
                                         Icons.north,
                                         color: Colors.black54,
@@ -249,7 +259,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    // Updated Disease Detection Card with gradient and icons
+                    // Updated Disease Detection Card
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
@@ -282,7 +292,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      const Text(
+                                      Text(
                                         'Disease Detection',
                                         style: TextStyle(
                                           fontSize: 26,
@@ -290,7 +300,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      const SizedBox(height: 10),
+                                      SizedBox(height: 10),
                                       Row(
                                         children: [
                                           Icon(
@@ -298,22 +308,22 @@ class _MyHomePageState extends State<MyHomePage> {
                                             size: 22,
                                             color: Colors.white70,
                                           ),
-                                          const SizedBox(width: 5),
-                                          const Text(
+                                          SizedBox(width: 5),
+                                          Text(
                                             'Capture',
                                             style: TextStyle(
                                               fontSize: 24,
                                               color: Colors.white70,
                                             ),
                                           ),
-                                          const SizedBox(width: 20),
+                                          SizedBox(width: 20),
                                           Icon(
                                             Icons.upload,
                                             size: 22,
                                             color: Colors.white70,
                                           ),
-                                          const SizedBox(width: 5),
-                                          const Text(
+                                          SizedBox(width: 5),
+                                          Text(
                                             'Upload',
                                             style: TextStyle(
                                               fontSize: 24,
@@ -336,13 +346,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 20),
-                              const Divider(color: Colors.white30, thickness: 1),
+                              SizedBox(height: 20),
+                              Divider(color: Colors.white30, thickness: 1),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
-                                    children: const [
+                                    children: [
                                       Icon(
                                         Icons.warning,
                                         color: Colors.white70,
@@ -356,7 +366,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ],
                                   ),
                                   Column(
-                                    children: const [
+                                    children: [
                                       Icon(
                                         Icons.local_hospital,
                                         color: Colors.white70,
@@ -370,7 +380,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ],
                                   ),
                                   Column(
-                                    children: const [
+                                    children: [
                                       Icon(
                                         Icons.info,
                                         color: Colors.white70,
@@ -378,7 +388,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       ),
                                       SizedBox(height: 5),
                                       Text(
-                                        'Consult',
+                                        'Learn',
                                         style: TextStyle(color: Colors.white70),
                                       ),
                                     ],
@@ -388,6 +398,27 @@ class _MyHomePageState extends State<MyHomePage> {
                             ],
                           ),
                         ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    // "Go to Sign Up" Button
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SignUpPage()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                        backgroundColor: const Color(0xFF07480E), // Same as app bar color
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: const Text(
+                        'Go to Sign Up',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
                   ],
@@ -471,7 +502,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             GestureDetector(
-              onTap: () => _onItemTapped(3),
+              onTap: () => _onItemTapped(3), // This will trigger the navigation
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -497,29 +528,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+
   }
 }
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Home Page'),
-        ),
-        body: Center(
-            child: ElevatedButton(
-              child: Text('Go to Sign Up'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()),  // Navigate to SignUpPage
-                );
-              },
-            ),
-        ),
-       );
-    }
-}
+
 
 
 
