@@ -11,7 +11,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   String _name = '';
   String _phoneNumber = '';
-  String _otp = '';
+  String _password = ''; // Changed from _otp to _password
   String _address = '';
   File? _image;
 
@@ -27,10 +27,10 @@ class _SignUpPageState extends State<SignUpPage> {
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      // Handle OTP and form submission logic here
+      // Handle form submission logic here
       print('Name: $_name');
       print('Phone Number: $_phoneNumber');
-      print('OTP: $_otp');
+      print('Password: $_password');
       print('Address: $_address');
       print('Image: ${_image?.path}');
     }
@@ -128,18 +128,18 @@ class _SignUpPageState extends State<SignUpPage> {
                         const SizedBox(height: 10),
                         TextFormField(
                           decoration: const InputDecoration(
-                            labelText: 'OTP',
+                            labelText: 'Password',
                             border: OutlineInputBorder(),
                           ),
-                          keyboardType: TextInputType.number,
+                          obscureText: true, // Add this for password input
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter the OTP sent to your phone';
+                              return 'Please enter your password';
                             }
                             return null;
                           },
                           onSaved: (value) {
-                            _otp = value!;
+                            _password = value!;
                           },
                         ),
                         const SizedBox(height: 10),
@@ -167,7 +167,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: ElevatedButton(
                     onPressed: _submitForm,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF07480E), // Updated parameter
+                      backgroundColor: const Color(0xFF07480E),
                       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),

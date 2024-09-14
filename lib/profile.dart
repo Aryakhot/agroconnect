@@ -203,23 +203,23 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
 
-                ElevatedButton(
-                  onPressed: () => _navigateChatbotSequence(
-                      context), // Correct function call
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(
-                        15), // Ensures the button looks square
-                    backgroundColor: const Color(0xFF07480E), // Button color
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                      BorderRadius.circular(12), // Rounded corners
-                    ),
-                    minimumSize:
-                    const Size(50, 50), // Square shape with rounded edges
-                  ),
-                  child:
-                  const Icon(Icons.chat, color: Colors.white), // Icon for the button
-                ),
+                // ElevatedButton(
+                //   onPressed: () => _navigateChatbotSequence(
+                //       context), // Correct function call
+                //   style: ElevatedButton.styleFrom(
+                //     padding: const EdgeInsets.all(
+                //         15), // Ensures the button looks square
+                //     backgroundColor: const Color(0xFF07480E), // Button color
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius:
+                //       BorderRadius.circular(12), // Rounded corners
+                //     ),
+                //     minimumSize:
+                //     const Size(50, 50), // Square shape with rounded edges
+                //   ),
+                //   child:
+                //   const Icon(Icons.chat, color: Colors.white), // Icon for the button
+                // ),
               ],
             ),
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'profile.dart';
 import 'chatbot.dart';
-import 'signup.dart';
+//import 'signup.dart';
+import 'weather.dart';
 
 class AgroConnectScreen extends StatefulWidget {
   @override
@@ -38,6 +39,13 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
         MaterialPageRoute(builder: (context) => ChatBotScreen()),
       );
     }
+    if (index == 2) {
+      // Navigate to ProfilePage when Profile icon is tapped
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => WeatherScreen()),
+      );
+    }
     // Add more conditions for other indices if navigation is needed
   }
   void _navigateChatbotSequence(BuildContext context) {
@@ -47,7 +55,6 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
       MaterialPageRoute(builder: (context) => ChatBotScreen()), // Replace with the first page you want to open
     ).then((_) {
       // Add subsequent navigations if needed
-
     });
   }
   @override
@@ -102,6 +109,11 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                       child: GestureDetector(
                         onTap: () {
                           // Action for weather card tap
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => WeatherScreen()),
+                          );
+
                         },
                         child: Container(
                           padding: const EdgeInsets.all(16.0),
