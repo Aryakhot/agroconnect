@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'profile.dart';
 import 'chatbot.dart';
 //import 'signup.dart';
@@ -74,6 +75,53 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
           IconButton(
             icon: const Icon(Icons.language, color: Colors.white),
             onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('change Language'.tr),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ListTile(
+                          title: const Text('English'),
+                          onTap: () {
+                            var locale = const Locale('en', 'US');
+                            Get.updateLocale(locale); // Switch to English
+                            Get.back(); // Close the dialog
+                          },
+                        ),
+                        ListTile(
+                          title: const Text('हिन्दी'),
+                          onTap: () {
+                            var locale = const Locale('hi', 'IN');
+                            Get.updateLocale(locale); // Switch to Spanish
+                            Get.back(); // Close the dialog
+                          },
+                        ),
+                        ListTile(
+                          title: const Text('मराठी'),
+                          onTap: () {
+                            var locale = const Locale('mr', 'IN');
+                            Get.updateLocale(locale); // Switch to Spanish
+                            Get.back(); // Close the dialog
+                          },
+                        ),
+                        ListTile(
+                          title: const Text('ಕನ್ನಡ'),
+                          onTap: () {
+                            var locale = const Locale('kn', 'IN');
+                            Get.updateLocale(locale); // Switch to Spanish
+                            Get.back(); // Close the dialog
+                          },
+                        ),
+                        // Add more languages as needed
+                      ],
+                    ),
+                  );
+                },
+              );
+
               // Action for language selection
             },
           ),
@@ -90,9 +138,9 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              const Center(
+               Center(
                 child: Text(
-                  'WELCOME!',
+                  'WELCOME!'.tr,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 36,
@@ -133,7 +181,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                               ),
                             ],
                           ),
-                          child: const Column(
+                          child:  Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
@@ -143,7 +191,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Today, Mumbai',
+                                        'Today, Mumbai'.tr,
                                         style: TextStyle(
                                           fontSize: 25,
                                           color: Colors.black,
@@ -152,7 +200,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                       ),
                                       SizedBox(height: 5),
                                       Text(
-                                        'Thunderstorm, 4mm Rainfall',
+                                        'Thunderstorm, 4mm Rainfall'.tr,
                                         style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.black,
@@ -168,7 +216,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                           ),
                                           SizedBox(width: 5),
                                           Text(
-                                            '16 km/h',
+                                            '16 km/h'.tr,
                                             style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black54,
@@ -182,7 +230,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                           ),
                                           SizedBox(width: 5),
                                           Text(
-                                            'Humidity: 80%',
+                                            'Humidity: 80%'.tr,
                                             style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black54,
@@ -192,7 +240,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                       ),
                                     ],
                                   ),
-                                  Column(
+                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Icon(
@@ -202,7 +250,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                       ),
                                       SizedBox(height: 5),
                                       Text(
-                                        '24°C',
+                                        '24°C'.tr,
                                         style: TextStyle(
                                           fontSize: 30,
                                           fontWeight: FontWeight.bold,
@@ -215,7 +263,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                               ),
                               SizedBox(height: 20),
                               Divider(color: Colors.black26, thickness: 1),
-                              Row(
+                                Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
@@ -227,16 +275,16 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                       ),
                                       SizedBox(height: 5),
                                       Text(
-                                        '6:30 AM',
+                                        '6:30 AM'.tr,
                                         style: TextStyle(color: Colors.black54),
                                       ),
                                       Text(
-                                        'Sunrise',
+                                        'Sunrise'.tr,
                                         style: TextStyle(color: Colors.black54),
                                       ),
                                     ],
                                   ),
-                                  Column(
+                                 Column(
                                     children: [
                                       Icon(
                                         Icons.nights_stay,
@@ -245,11 +293,11 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                       ),
                                       SizedBox(height: 5),
                                       Text(
-                                        '6:45 PM',
+                                        '6:45 PM'.tr,
                                         style: TextStyle(color: Colors.black54),
                                       ),
                                       Text(
-                                        'Sunset',
+                                        'Sunset'.tr,
                                         style: TextStyle(color: Colors.black54),
                                       ),
                                     ],
@@ -263,11 +311,11 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                       ),
                                       SizedBox(height: 5),
                                       Text(
-                                        'NE',
+                                        'NE'.tr,
                                         style: TextStyle(color: Colors.black54),
                                       ),
                                       Text(
-                                        'Wind Dir.',
+                                        'Wind Dir.'.tr,
                                         style: TextStyle(color: Colors.black54),
                                       ),
                                     ],
@@ -304,7 +352,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                               ),
                             ],
                           ),
-                          child: const Column(
+                          child:  Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
@@ -314,7 +362,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Disease Detection',
+                                        'Disease Detection'.tr,
                                         style: TextStyle(
                                           fontSize: 26,
                                           color: Colors.white,
@@ -331,7 +379,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                           ),
                                           SizedBox(width: 5),
                                           Text(
-                                            'Capture',
+                                            'Capture'.tr,
                                             style: TextStyle(
                                               fontSize: 24,
                                               color: Colors.white70,
@@ -345,7 +393,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                           ),
                                           SizedBox(width: 5),
                                           Text(
-                                            'Upload',
+                                            'Upload'.tr,
                                             style: TextStyle(
                                               fontSize: 24,
                                               color: Colors.white70,
@@ -381,7 +429,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                       ),
                                       SizedBox(height: 5),
                                       Text(
-                                        'Detect',
+                                        'Detect'.tr,
                                         style: TextStyle(color: Colors.white70),
                                       ),
                                     ],
@@ -395,7 +443,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                       ),
                                       SizedBox(height: 5),
                                       Text(
-                                        'Treat',
+                                        'Treat'.tr,
                                         style: TextStyle(color: Colors.white70),
                                       ),
                                     ],
@@ -409,7 +457,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                       ),
                                       SizedBox(height: 5),
                                       Text(
-                                        'Learn',
+                                        'Learn'.tr,
                                         style: TextStyle(color: Colors.white70),
                                       ),
                                     ],
@@ -461,7 +509,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                         : Colors.grey,
                   ),
                   Text(
-                    'Home',
+                    'Home'.tr,
                     style: TextStyle(
                       color: _selectedIndex == 0
                           ? const Color(0xFF07480E)
@@ -484,7 +532,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                         : Colors.grey,
                   ),
                   Text(
-                    'Chat',
+                    'Chat'.tr,
                     style: TextStyle(
                       color: _selectedIndex == 1
                           ? const Color(0xFF07480E)
@@ -507,7 +555,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                         : Colors.grey,
                   ),
                   Text(
-                    'Weather',
+                    'Weather'.tr,
                     style: TextStyle(
                       color: _selectedIndex == 2
                           ? const Color(0xFF07480E)
@@ -530,7 +578,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                         : Colors.grey,
                   ),
                   Text(
-                    'Profile',
+                    'Profile'.tr,
                     style: TextStyle(
                       color: _selectedIndex == 3
                           ? const Color(0xFF07480E)
