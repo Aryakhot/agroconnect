@@ -6,6 +6,8 @@ import 'chatbot.dart';
 import 'weather.dart';
 
 class AgroConnectScreen extends StatefulWidget {
+  const AgroConnectScreen({super.key});
+
   @override
   _AgroConnectScreenState createState() => _AgroConnectScreenState();
 }
@@ -30,21 +32,21 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
       // Replace the current AgroConnectScreen to avoid showing the back button
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => AgroConnectScreen()),
+        MaterialPageRoute(builder: (context) => const AgroConnectScreen()),
       );
     }
     if (index == 1) {
       // Navigate to ProfilePage when Profile icon is tapped
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ChatBotScreen()),
+        MaterialPageRoute(builder: (context) => const ChatBotScreen()),
       );
     }
     if (index == 2) {
       // Navigate to ProfilePage when Profile icon is tapped
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => WeatherScreen()),
+        MaterialPageRoute(builder: (context) => const WeatherScreen()),
       );
     }
     // Add more conditions for other indices if navigation is needed
@@ -53,7 +55,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
 // Adjust the pages and their sequence as per your actual app pages
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ChatBotScreen()), // Replace with the first page you want to open
+      MaterialPageRoute(builder: (context) => const ChatBotScreen()), // Replace with the first page you want to open
     ).then((_) {
       // Add subsequent navigations if needed
     });
@@ -62,15 +64,26 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-            'AgroConnect',
-          style: TextStyle(
-            fontSize: 20, // Match font size with Plantix app
-            color: Colors.white, // Match AppBar color style
-          ),
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.eco, // Adds an icon related to agriculture
+              color: Colors.white,
+            ),
+            SizedBox(width: 10), // Adds spacing between icon and text
+            Text(
+              'AgroConnect',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
-        automaticallyImplyLeading: false, // Prevents the back arrow
-        backgroundColor: const Color(0xFF07480E),
+        automaticallyImplyLeading: true, // Adds back arrow if applicable
+        backgroundColor: const Color(0xFF2BCD3D),
         actions: [
           IconButton(
             icon: const Icon(Icons.language, color: Colors.white),
@@ -138,10 +151,10 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-               Center(
+              Center(
                 child: Text(
                   'WELCOME!'.tr,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 36,
                     color: Color(0xFFFFFFFF),
@@ -149,7 +162,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
               Expanded(
                 child: Column(
                   children: [
@@ -159,7 +172,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                           // Action for weather card tap
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => WeatherScreen()),
+                            MaterialPageRoute(builder: (context) => const WeatherScreen()),
                           );
 
                         },
@@ -192,46 +205,46 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                     children: [
                                       Text(
                                         'Today, Mumbai'.tr,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 25,
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      SizedBox(height: 5),
+                                      const SizedBox(height: 5),
                                       Text(
                                         'Thunderstorm, 4mm Rainfall'.tr,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 16,
                                           color: Colors.black,
                                         ),
                                       ),
-                                      SizedBox(height: 10),
+                                      const SizedBox(height: 10),
                                       Row(
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Icons.air,
                                             size: 18,
                                             color: Colors.black54,
                                           ),
-                                          SizedBox(width: 5),
+                                          const SizedBox(width: 5),
                                           Text(
                                             '16 km/h'.tr,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 16,
                                               color: Colors.black54,
                                             ),
                                           ),
-                                          SizedBox(width: 10),
-                                          Icon(
+                                          const SizedBox(width: 10),
+                                          const Icon(
                                             Icons.water_drop,
                                             size: 18,
                                             color: Colors.black54,
                                           ),
-                                          SizedBox(width: 5),
+                                          const SizedBox(width: 5),
                                           Text(
                                             'Humidity: 80%'.tr,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 16,
                                               color: Colors.black54,
                                             ),
@@ -240,18 +253,18 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                       ),
                                     ],
                                   ),
-                                   Column(
+                                  Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.cloud,
                                         size: 50,
                                         color: Colors.grey,
                                       ),
-                                      SizedBox(height: 5),
+                                      const SizedBox(height: 5),
                                       Text(
                                         '24°C'.tr,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 30,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black,
@@ -261,62 +274,62 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 20),
-                              Divider(color: Colors.black26, thickness: 1),
-                                Row(
+                              const SizedBox(height: 5),
+                              const Divider(color: Colors.black26, thickness: 1),
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.sunny,
                                         color: Colors.black54,
                                         size: 30,
                                       ),
-                                      SizedBox(height: 5),
+                                      const SizedBox(height: 5),
                                       Text(
                                         '6:30 AM'.tr,
-                                        style: TextStyle(color: Colors.black54),
+                                        style: const TextStyle(color: Colors.black54),
                                       ),
                                       Text(
                                         'Sunrise'.tr,
-                                        style: TextStyle(color: Colors.black54),
-                                      ),
-                                    ],
-                                  ),
-                                 Column(
-                                    children: [
-                                      Icon(
-                                        Icons.nights_stay,
-                                        color: Colors.black54,
-                                        size: 30,
-                                      ),
-                                      SizedBox(height: 5),
-                                      Text(
-                                        '6:45 PM'.tr,
-                                        style: TextStyle(color: Colors.black54),
-                                      ),
-                                      Text(
-                                        'Sunset'.tr,
-                                        style: TextStyle(color: Colors.black54),
+                                        style: const TextStyle(color: Colors.black54),
                                       ),
                                     ],
                                   ),
                                   Column(
                                     children: [
-                                      Icon(
+                                      const Icon(
+                                        Icons.nights_stay,
+                                        color: Colors.black54,
+                                        size: 30,
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        '6:45 PM'.tr,
+                                        style: const TextStyle(color: Colors.black54),
+                                      ),
+                                      Text(
+                                        'Sunset'.tr,
+                                        style: const TextStyle(color: Colors.black54),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      const Icon(
                                         Icons.north,
                                         color: Colors.black54,
                                         size: 30,
                                       ),
-                                      SizedBox(height: 5),
+                                      const SizedBox(height: 5),
                                       Text(
                                         'NE'.tr,
-                                        style: TextStyle(color: Colors.black54),
+                                        style: const TextStyle(color: Colors.black54),
                                       ),
                                       Text(
                                         'Wind Dir.'.tr,
-                                        style: TextStyle(color: Colors.black54),
+                                        style: const TextStyle(color: Colors.black54),
                                       ),
                                     ],
                                   ),
@@ -363,38 +376,38 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                     children: [
                                       Text(
                                         'Disease Detection'.tr,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 26,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      SizedBox(height: 10),
+                                      const SizedBox(height: 70),
                                       Row(
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Icons.camera_alt,
                                             size: 22,
                                             color: Colors.white70,
                                           ),
-                                          SizedBox(width: 5),
+                                          const SizedBox(width: 10),
                                           Text(
                                             'Capture'.tr,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 24,
                                               color: Colors.white70,
                                             ),
                                           ),
-                                          SizedBox(width: 20),
-                                          Icon(
+                                          const SizedBox(width: 20),
+                                          const Icon(
                                             Icons.upload,
                                             size: 22,
                                             color: Colors.white70,
                                           ),
-                                          SizedBox(width: 5),
+                                          const SizedBox(width: 5),
                                           Text(
                                             'Upload'.tr,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 24,
                                               color: Colors.white70,
                                             ),
@@ -403,7 +416,7 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                       ),
                                     ],
                                   ),
-                                  Column(
+                                  const Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Icon(
@@ -415,50 +428,50 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 20),
-                              Divider(color: Colors.white30, thickness: 1),
+                              const SizedBox(height: 20),
+                              const Divider(color: Colors.white30, thickness: 1),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.warning,
                                         color: Colors.white70,
                                         size: 30,
                                       ),
-                                      SizedBox(height: 5),
+                                      const SizedBox(height: 5),
                                       Text(
                                         'Detect'.tr,
-                                        style: TextStyle(color: Colors.white70),
+                                        style: const TextStyle(color: Colors.white70),
                                       ),
                                     ],
                                   ),
                                   Column(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.local_hospital,
                                         color: Colors.white70,
                                         size: 30,
                                       ),
-                                      SizedBox(height: 5),
+                                      const SizedBox(height: 5),
                                       Text(
                                         'Treat'.tr,
-                                        style: TextStyle(color: Colors.white70),
+                                        style: const TextStyle(color: Colors.white70),
                                       ),
                                     ],
                                   ),
                                   Column(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.info,
                                         color: Colors.white70,
                                         size: 30,
                                       ),
-                                      SizedBox(height: 5),
+                                      const SizedBox(height: 5),
                                       Text(
                                         'Learn'.tr,
-                                        style: TextStyle(color: Colors.white70),
+                                        style: const TextStyle(color: Colors.white70),
                                       ),
                                     ],
                                   ),
@@ -469,29 +482,15 @@ class _AgroConnectScreenState extends State<AgroConnectScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Align(
-                      alignment: Alignment.centerRight, // Aligns the button to the right
-                      child: ElevatedButton(
-                        onPressed: () => _navigateChatbotSequence(context), // Correct function call
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(15), // Ensures the button looks square
-                          backgroundColor: const Color(0xFF07480E), // Button color
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12), // Rounded corners
-                          ),
-                          minimumSize: const Size(50, 50), // Square shape with rounded edges
-                        ),
-                        child: const Icon(Icons.chat, color: Colors.white), // Icon for the button
-                      ),
+
+                      ],
                     ),
-                  ],
-                ),
               ),
-            ],
-          ),
+                ],
+              ),
         ),
-      ),
+          ),
+
       bottomNavigationBar: BottomAppBar(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

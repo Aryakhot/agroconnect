@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'homepage.dart'; // Replace with the actual path to your AgroConnectScreen file
 import 'profile.dart';
 class ChatBotScreen extends StatefulWidget {
-  const ChatBotScreen({Key? key}) : super(key: key);
+  const ChatBotScreen({super.key});
 
   @override
   _ChatBotScreenState createState() => _ChatBotScreenState();
@@ -41,28 +41,28 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
       // Navigate to the AgroConnectScreen
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => AgroConnectScreen()),
+          MaterialPageRoute(builder: (context) => const AgroConnectScreen()),
         );
         break;
       case 1:
       // Stay on the Chat screen
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => ChatBotScreen()),
+          MaterialPageRoute(builder: (context) => const ChatBotScreen()),
         );
         break;
       case 2:
       // Add navigation logic for the Weather screen
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => AgroConnectScreen()),
+          MaterialPageRoute(builder: (context) => const AgroConnectScreen()),
         );
         break;
       case 3:
       // Add navigation logic for the Profile screen
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => ProfilePage()),
+          MaterialPageRoute(builder: (context) => const ProfilePage()),
         );
         break;
       default:
@@ -301,7 +301,6 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
     );
   }
 }
-
 
 
 

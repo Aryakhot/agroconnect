@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:fluttermoji/fluttermojiCircleAvatar.dart';
-import 'signup.dart'; // Import the sign-up page
-import 'profile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'signup.dart';
 import 'homepage.dart';
 import 'chatbot.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-void _navigateChatbotSequence(BuildContext context) {
-  // Adjust the pages and their sequence as per your actual app pages
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => ChatBotScreen()), // Replace with the first page you want to open
-  ).then((_) {
-    // Add subsequent navigations if needed
-  });
-}
-
 class _ProfilePageState extends State<ProfilePage> {
-  int _selectedIndex = 3; // Set to 3 to highlight the Profile tab
-  bool isSignedIn = false; // Simulating user sign-in status. You can replace this with actual authentication check.
+  int _selectedIndex = 3;
+  User? user;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkUserStatus();
+  }
+
+  void _checkUserStatus() {
+    // Get the current user from FirebaseAuth
+    user = FirebaseAuth.instance.currentUser;
+    setState(() {}); // Trigger UI update
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -34,35 +36,28 @@ class _ProfilePageState extends State<ProfilePage> {
     // Navigate based on the selected index
     switch (index) {
       case 0:
-      // Navigate to the AgroConnectScreen
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => AgroConnectScreen()),
+          MaterialPageRoute(builder: (context) => const AgroConnectScreen()),
         );
         break;
       case 1:
-      // Stay on the Chat screen
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => ChatBotScreen()),
+          MaterialPageRoute(builder: (context) => const ChatBotScreen()),
         );
         break;
       case 2:
-      // Add navigation logic for the Weather screen
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => AgroConnectScreen()),
+          MaterialPageRoute(builder: (context) => const AgroConnectScreen()),
         );
         break;
       case 3:
-      // Add navigation logic for the Profile screen
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => ProfilePage()),
+          MaterialPageRoute(builder: (context) => const ProfilePage()),
         );
-        break;
-      default:
-      // Handle default or unexpected cases
         break;
     }
   }
@@ -89,16 +84,16 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 10),
 
-            // Show a user icon with a fancy question mark if not signed in
+            // Display avatar based on user sign-in status
             Center(
-              child: isSignedIn
+              child: user != null
                   ? FluttermojiCircleAvatar(radius: 60)
-                  : const UserIconWithFancyQuestionMark(), // Fancy user icon
+                  : const UserIconWithFancyQuestionMark(),
             ),
             const SizedBox(height: 10),
 
-            // If the user is not signed in, show the "Join Community" message and Sign Up button
-            if (!isSignedIn)
+            if (user == null)
+            // If not signed in, show sign-up option
               Column(
                 children: [
                   const SizedBox(height: 20),
@@ -119,14 +114,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  SignUpPage()), // Navigate to Sign Up page
+                          MaterialPageRoute(builder: (context) => const SignUpPage()),
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                         backgroundColor: const Color(0xFF07480E),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
@@ -141,24 +133,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               )
             else
+            // If signed in, display user info
               Column(
                 children: [
                   const SizedBox(height: 10),
-                  const Center(
-                    child: Text(
-                      'User ID: 123456',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black54,
-                      ),
-                    ),
-                  ),
+
                   const SizedBox(height: 20),
-                  const ProfileInfoField(label: 'Name', value: 'John Doe'),
-                  const ProfileInfoField(label: 'Age', value: '30'),
-                  const ProfileInfoField(label: 'Gender', value: 'Male'),
-                  const ProfileInfoField(
-                      label: 'Address', value: '123 Agro Street, Farmville'),
+                  ProfileInfoField(label: 'Email', value: user!.email ?? 'N/A'),
                   const SizedBox(height: 20),
                   Center(
                     child: ElevatedButton(
@@ -166,8 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         // Update info action
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                         backgroundColor: const Color(0xFF07480E),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
@@ -179,51 +159,30 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await FirebaseAuth.instance.signOut();
+                        _checkUserStatus(); // Update UI after sign-out
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                        backgroundColor: Colors.redAccent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: const Text(
+                        'Log Out',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ),
+                  ),
                 ],
               ),
 
             const Spacer(),
-
-
-            // Align the AgroConnect text and chatbot button at the same level
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Ensures even spacing between elements
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.center, // Center the text within its space
-                    child: Text(
-                      'AgroConnect',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black54,
-                      ),
-                    ),
-                  ),
-                ),
-
-                // ElevatedButton(
-                //   onPressed: () => _navigateChatbotSequence(
-                //       context), // Correct function call
-                //   style: ElevatedButton.styleFrom(
-                //     padding: const EdgeInsets.all(
-                //         15), // Ensures the button looks square
-                //     backgroundColor: const Color(0xFF07480E), // Button color
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius:
-                //       BorderRadius.circular(12), // Rounded corners
-                //     ),
-                //     minimumSize:
-                //     const Size(50, 50), // Square shape with rounded edges
-                //   ),
-                //   child:
-                //   const Icon(Icons.chat, color: Colors.white), // Icon for the button
-                // ),
-              ],
-            ),
-
-            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -231,98 +190,62 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            GestureDetector(
-              onTap: () => _onItemTapped(0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.home,
-                    size: 35,
-                    color:
-                    _selectedIndex == 0 ? const Color(0xFF07480E) : Colors.grey,
-                  ),
-                  Text(
-                    'Home',
-                    style: TextStyle(
-                      color: _selectedIndex == 0 ? const Color(0xFF07480E) : Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            GestureDetector(
-              onTap: () => _onItemTapped(1),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.chat,
-                    size: 35,
-                    color:
-                    _selectedIndex == 1 ? const Color(0xFF07480E) : Colors.grey,
-                  ),
-                  Text(
-                    'Chat',
-                    style: TextStyle(
-                      color: _selectedIndex == 1 ? const Color(0xFF07480E) : Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            GestureDetector(
-              onTap: () => _onItemTapped(2),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.cloud,
-                    size: 35,
-                    color:
-                    _selectedIndex == 2 ? const Color(0xFF07480E) : Colors.grey,
-                  ),
-                  Text(
-                    'Weather',
-                    style: TextStyle(
-                      color: _selectedIndex == 2 ? const Color(0xFF07480E) : Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            GestureDetector(
-              onTap: () => _onItemTapped(3),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.person,
-                    size: 35,
-                    color:
-                    _selectedIndex == 3 ? const Color(0xFF07480E) : Colors.grey,
-                  ),
-                  Text(
-                    'Profile',
-                    style: TextStyle(
-                      color: _selectedIndex == 3 ? const Color(0xFF07480E) : Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildNavItem(Icons.home, 'Home', 0),
+            _buildNavItem(Icons.chat, 'Chat', 1),
+            _buildNavItem(Icons.cloud, 'Weather', 2),
+            _buildNavItem(Icons.person, 'Profile', 3),
           ],
         ),
       ),
     );
   }
-}
 
-// Define the ProfileInfoField widget
+  Widget _buildNavItem(IconData icon, String label, int index) {
+    return GestureDetector(
+      onTap: () => _onItemTapped(index),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            size: 35,
+            color: _selectedIndex == index ? const Color(0xFF07480E) : Colors.grey,
+          ),
+          Text(
+            label,
+            style: TextStyle(
+              color: _selectedIndex == index ? const Color(0xFF07480E) : Colors.grey,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+// Widget to display a placeholder user icon with a question mark
+class UserIconWithFancyQuestionMark extends StatelessWidget {
+  const UserIconWithFancyQuestionMark({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.black12, width: 2),
+      ),
+      child: CircleAvatar(
+        radius: 60,
+        backgroundColor: Colors.grey.shade300,
+        child: const Text(
+          '?',
+          style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+      ),
+    );
+  }
+}
+// Widget to display a label and value for profile information
 class ProfileInfoField extends StatelessWidget {
   final String label;
   final String value;
@@ -330,8 +253,8 @@ class ProfileInfoField extends StatelessWidget {
   const ProfileInfoField({
     required this.label,
     required this.value,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -358,34 +281,5 @@ class ProfileInfoField extends StatelessWidget {
     );
   }
 }
-
-// Define the UserIconWithFancyQuestionMark widget
-class UserIconWithFancyQuestionMark extends StatelessWidget {
-  const UserIconWithFancyQuestionMark({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.black12, width: 2),
-      ),
-      child: CircleAvatar(
-        radius: 60,
-        backgroundColor: Colors.grey.shade300,
-        child: const Text(
-          '?',
-          style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-      ),
-    );
-  }
-}
-
-
-
-
-
-
 
 

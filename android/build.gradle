@@ -1,3 +1,15 @@
+buildscript {
+    repositories {
+        google() // Google's Maven repository for Google services and Android tools
+        mavenCentral() // Maven Central repository for other dependencies
+    }
+    dependencies {
+        classpath "com.google.gms:google-services:4.4.2"
+        classpath "com.android.tools.build:gradle:8.0.0" // Android Gradle plugin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10" // Kotlin Gradle plugin
+    }
+}
+
 allprojects {
     repositories {
         google()

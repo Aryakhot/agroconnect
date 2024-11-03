@@ -1,4 +1,5 @@
 plugins {
+    id 'com.google.gms.google-services'
     id "com.android.application"
     id "kotlin-android"
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
@@ -28,6 +29,8 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        minSdkVersion 23
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -41,4 +44,23 @@ android {
 
 flutter {
     source = "../.."
+}
+dependencies {
+    // Add dependencies here
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.10" // Kotlin standard library
+    implementation "androidx.core:core-ktx:1.12.0" // Core KTX for Android extensions
+    implementation "com.google.android.material:material:1.9.0" // Material Design components
+
+    // Firebase dependencies (if using Firebase)
+
+    implementation "com.google.firebase:firebase-analytics-ktx"
+
+    // Networking and JSON handling libraries
+    implementation "com.squareup.retrofit2:retrofit:2.9.0" // Retrofit for networking
+    implementation "com.squareup.okhttp3:okhttp:4.10.0" // OkHttp for HTTP requests
+    implementation "com.google.code.gson:gson:2.10.1" // Gson for JSON parsing
+
+    // Any other dependencies your project may need
+    implementation platform('com.google.firebase:firebase-bom:33.5.1')
 }

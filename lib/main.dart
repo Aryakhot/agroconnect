@@ -1,10 +1,20 @@
+import 'package:agroconnect/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'homepage.dart';
 import 'language_selection_page.dart';
-import 'locale_string.dart';  // Import AgroConnectScreen
+import 'locale_string.dart';
+import 'LoginPage.dart';
+import 'signup.dart';
+import 'profile.dart'; // Import your protected ProfilePage
+import 'AuthMiddleware.dart'; // Import AuthMiddleware
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -23,22 +33,20 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color(0xFFFFFFFF),
         fontFamily: 'Roboto',
       ),
-      initialRoute: '/language',
-      // Set the initial route to the language selection page
+      initialRoute: '/language', // Set the initial route to the language selection page
       getPages: [
         GetPage(name: '/language', page: () => const LanguageSelectionPage()),
-        GetPage(name: '/homepage', page: () =>  AgroConnectScreen()),
+        GetPage(name: '/signUp', page: () => const SignUpPage()),
+        GetPage(name: '/login', page: () => const LoginPage()),
+        GetPage(name: '/homepage', page: () => const AgroConnectScreen()),
+
+        // Protect ProfilePage with AuthMiddleware
+        GetPage(
+          name: '/profile',
+          page: () => const ProfilePage(),
+          middlewares: [AuthMiddleware()], // Apply AuthMiddleware here
+        ),
       ],
-      // home: AgroConnectScreen(),  // Set AgroConnectScreen as the initial screen
-      // routes: {
-      //   '/homepage': (context) => AgroConnectScreen(),  // Define the route for homepage
-      // },
     );
   }
 }
-
-
-
-
-
-

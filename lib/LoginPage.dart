@@ -1,30 +1,27 @@
+import 'package:agroconnect/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_auth_implementation/firebase_auth_services.dart';
-import 'package:agroconnect/LoginPage.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
   final FirebaseAuthService _authService = FirebaseAuthService();
   bool _isLoading = false;
   bool _obscurePassword = true;
-  bool _obscureConfirmPassword = true;
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -33,41 +30,55 @@ class _SignUpPageState extends State<SignUpPage> {
       setState(() => _isLoading = true);
 
       try {
-        final userCredential = await _authService.signUpWithEmailAndPassword(
+        final userCredential = await _authService.signInWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text,
         );
 
         if (!mounted) return;
 
-        if (userCredential!.user != null) {
-          // Send email verification
-          await userCredential.user!.sendEmailVerification();
+        if (userCredential?.user != null) {
+          // Check if email is verified if needed
+          if (userCredential!.user!.emailVerified) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Login successful!'),
+                backgroundColor: Colors.green,
+              ),
+            );
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Account created! Please check your email for verification.'),
-              backgroundColor: Colors.green,
-            ),
-          );
+            // Navigate to home page (replace HomePage with your actual destination)
+            // Uncomment this when you have a defined HomePage to navigate to
+            // Navigator.of(context).pushReplacement(
+            //   MaterialPageRoute(builder: (context) => HomePage()),
+            // );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Please verify your email first'),
+                backgroundColor: Colors.orange,
+              ),
+            );
 
-          // Navigate back to the login page
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const LoginPage()),
-          );
+            // Optionally send a verification email
+            await userCredential.user!.sendEmailVerification();
+          }
         }
       } on FirebaseAuthException catch (e) {
-        String errorMessage = 'An error occurred during signup';
+        String errorMessage = 'An error occurred during login';
 
         switch (e.code) {
-          case 'email-already-in-use':
-            errorMessage = 'This email is already registered';
+          case 'user-not-found':
+            errorMessage = 'No account found with this email address';
             break;
-          case 'weak-password':
-            errorMessage = 'Password should contain at least one uppercase letter, number, and special character';
+          case 'wrong-password':
+            errorMessage = 'Incorrect password';
             break;
-          case 'invalid-email':
-            errorMessage = 'Please enter a valid email address';
+          case 'user-disabled':
+            errorMessage = 'This account has been disabled';
+            break;
+          case 'too-many-requests':
+            errorMessage = 'Too many failed attempts. Please try again later';
             break;
           default:
             errorMessage = e.message ?? errorMessage;
@@ -98,7 +109,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create Account'),
+        title: const Text('Login'),
         backgroundColor: const Color(0xFF07480E),
         elevation: 0,
       ),
@@ -131,7 +142,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           TextFormField(
                             controller: _emailController,
                             decoration: const InputDecoration(
-                              labelText: 'Email',
+                              labelText: 'Email Address',
                               border: OutlineInputBorder(),
                               prefixIcon: Icon(Icons.email),
                               hintText: 'Enter your email address',
@@ -140,9 +151,10 @@ class _SignUpPageState extends State<SignUpPage> {
                             textInputAction: TextInputAction.next,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please enter your email';
+                                return 'Please enter your email address';
                               }
-                              if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                              final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
+                              if (!emailRegex.hasMatch(value)) {
                                 return 'Please enter a valid email address';
                               }
                               return null;
@@ -164,46 +176,26 @@ class _SignUpPageState extends State<SignUpPage> {
                               hintText: 'Enter your password',
                             ),
                             obscureText: _obscurePassword,
-                            textInputAction: TextInputAction.next,
+                            textInputAction: TextInputAction.done,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your password';
                               }
-                              if (value.length < 8) {
-                                return 'Password must be at least 8 characters long';
-                              }
-                              if (!RegExp(r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$&*~]).+$').hasMatch(value)) {
-                                return 'Password must contain uppercase, number, and special character';
-                              }
                               return null;
                             },
                           ),
-                          const SizedBox(height: 16),
-                          TextFormField(
-                            controller: _confirmPasswordController,
-                            decoration: InputDecoration(
-                              labelText: 'Confirm Password',
-                              border: const OutlineInputBorder(),
-                              prefixIcon: const Icon(Icons.lock_outline),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
-                                ),
-                                onPressed: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
+                          const SizedBox(height: 8),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              onPressed: () {
+                                // TODO: Implement forgot password navigation
+                              },
+                              child: const Text(
+                                'Forgot Password?',
+                                style: TextStyle(color: Color(0xFF07480E)),
                               ),
-                              hintText: 'Confirm your password',
                             ),
-                            obscureText: _obscureConfirmPassword,
-                            textInputAction: TextInputAction.done,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please confirm your password';
-                              }
-                              if (value != _passwordController.text) {
-                                return 'Passwords do not match';
-                              }
-                              return null;
-                            },
                           ),
                         ],
                       ),
@@ -229,7 +221,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     )
                         : const Text(
-                      'Create Account',
+                      'Login',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
@@ -237,11 +229,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                        MaterialPageRoute(builder: (context) => const SignUpPage()),
                       );
                     },
                     child: const Text(
-                      'Already have an account? Sign In',
+                      'Don\'t have an account? Sign Up',
                       style: TextStyle(color: Color(0xFF07480E)),
                     ),
                   ),
